@@ -1,0 +1,100 @@
+
+
+
+6 Months --> 200$ credits
+
+Account create --> 100$ (Instance launch, RDS launch, Bedrock, BIlling alarm)
+
+
+Root user email address: 
+AWS account name : 
+
+
+
+We will have 2 types of uses in AWS Accounts.
+1. root user : Unrestricted access on AWS account. (Email & Password)
+2. IAM user : We need to create these users, based on job requirements.. 
+
+Jr Resources : Monitoring the resources : ReadOnly
+Mid Resource : Storage and network : S3, VPC
+Sr. resource : Full AWS Access : Administrator Access
+
+
+EC2 : Servers
+S3 : Storage
+RDS : Database
+VPC : Network
+
+
+aws.com
+https://aws.amazon.com/console/			--> root email & pwd
+
+============
+
+
+** AWS Always recomends to enable MFA for addl security.
+
+IAM : Identity and Access management
+
+
+Latency : if we send a request to server, how quickly the server is responding back to our req. (time to get response for req)
+Quick response : Low latency
+Delayed responses : High latency
+
+
+AWS Gloabl Infrastructure : 
+
+Region : There is no technical defination for region. Its just a physical/geographical location.
+As of April 1st, 2026.. 39 Geographic Regions
+
+---
+
+Availability Zones / AZs : AZ is nothing but a Data Center or combination of multiple DCs. Every region contains atleast 2 AZs. (HA/FT)
+As of April 1st, 2026.. 123 Availability Zones
+
+S3 : >= 3 AZs (AWS DO this for us)
+EC2 : ELB : We have to span resources across AZs (Customer)
+Route53 : Failover/latency/weighted : We can span our resources across Multiple Regions.
+Hybrid Env : Some servers in CLoud/AWS.. and some other servers in On-Premise.. (Direct Connect)
+
+---
+
+Edge / PoP Location : CDN / Cached location : 750+ edge location.. 
+CDN : Content Delivery Network..
+We have a service named "cloudfront", similar to "Cloudflair/Akamai".. 
+
+---
+
+
+Organisation : 
+CEO				--> Everything
+CTO				--> tech
+CIO				--> information
+Account			--> Account/Finance
+Marketing		--> Sell the product
+Developers		--> Product Developed
+House Keeping	--> Cleaning / Office premises
+
+
+root user (CEO) : Unrestricted access on our aws account (payment info change / Account closure / Any resource delete)
+
+IAM User : 
+
+Billing Depart : AWS account bill payments / Invoice / Discounts
+Storage Admin : S3, EFS, FSx : takes care about Storage related tickets/activities
+Database Admin : RDS, Elasticache, Redshift : takes care about db related tickets/activities
+TL : All Services Access : All AWS Services access required
+
+Least Privilages Mechanism : Provide permissions to perform their job duties. (no more / No less)
+
+To achieve least privilages mechanism on AWS, We have to go with IAM user. 
+
+
+
+
+
+
+
+
+
+
