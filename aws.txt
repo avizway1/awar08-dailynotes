@@ -65,7 +65,6 @@ We have a service named "cloudfront", similar to "Cloudflair/Akamai"..
 
 ---
 
-
 Organisation : 
 CEO				--> Everything
 CTO				--> tech
@@ -88,6 +87,105 @@ TL : All Services Access : All AWS Services access required
 Least Privilages Mechanism : Provide permissions to perform their job duties. (no more / No less)
 
 To achieve least privilages mechanism on AWS, We have to go with IAM user. 
+
+
+==========
+
+
+
+user-1: S3 : storage 
+user-2: All services but should not access billing info / account management:  
+
+2 types of access :
+1. AWS Management console access : Username, Password, Sign-url 
+2. Programatic Access : AccessKeyID and SecretAccessKey, use with CLI (Dedicated class)
+
+
+CostCenter : AAZAA
+proj1: AAZAA
+proj2: AAABB
+
+Project : icic / hdfc 
+POC/Owner : point of contact
+
+
+IAM User with "AdministratorAccess" is similar to root user, but Cant manage Account related activities i.e; changing payment methods / closing account / billing info changes.
+
+=======
+
+
+
+Basic Support Plan : Free
+--> Included for every account automatically
+--> 24/7 access to aws documentation, AWS Re:Post
+--> We can support for "Account and Billing" realted queries via "web / Phone / chat".
+--> No technical support from AWS.
+--> Limited trusted advisor checks
+
+
+Business Support+ : Starts from $29/Month
+--> AWS recommed minimum plan for Production workload.
+--> AI Powered 24/7 support
+--> 24/7 Phone/Chat/web access to cloud support engineers.
+--> Critical case response : < 30 Minutes
+--> Full trusted advisor checks (500+)
+--> Unlimited support cases, Any IAM users can raise ticket.
+
+
+Enterprise support: $5000/Month
+--> Recommended plan for production-critical workloads with AI-powered expert guidance
+--> Designated TAM (Technical Account Manager) - your personal AWS expert
+--> Critical case response : < 15 Minutes
+--> AWS Well architecture reviews + proactive security reviews (Annual Architectural and Operational review)
+--> Unlimited support cases, Any IAM users can raise ticket.
+--> Full trusted advisor checks (500+)
+--> Multi-account support
+
+
+Unified operations : From $50,000/month
+Recommended if you have mission-critical workloads that require enhanced resilience and application-specific expertise
+--> Mission critical, Zero-downtime workload
+--> Everything from "Enterprise Support" + below addl
+--> Critical respose: < 5 Minutes
+--> 24/7 proactive workload monitoring
+--> TAM + Domain Specialist engineers + Incident Management
+
+
+======
+
+Case Severity:
+general guidance : < 24 hrs
+System impaired : < 12 hrs
+Production system Impraied : < 4 hrs
+Production system down : < 1 hr
+Business critical system down : < 15 Min
+Mission critical business system down : < 5 Min
+
+======
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
