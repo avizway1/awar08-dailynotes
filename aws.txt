@@ -114,12 +114,11 @@ IAM User with "AdministratorAccess" is similar to root user, but Cant manage Acc
 =======
 
 
-
 Basic Support Plan : Free
 --> Included for every account automatically
 --> 24/7 access to aws documentation, AWS Re:Post
 --> We can support for "Account and Billing" realted queries via "web / Phone / chat".
---> No technical support from AWS.
+--> No technical support from AWS. **
 --> Limited trusted advisor checks
 
 
@@ -163,6 +162,109 @@ Mission critical business system down : < 5 Min
 
 ======
 
+D: 03/04/2026
+
+Implicit allow : 
+--> While creating user, if you allocate "S3fullaccess" and "ec2fullaccess", user can access both the service. all remaining services will be denied.
+
+Policies written in JSON format.
+
+1. AWS Managed					- Provided polocies based on services. We cant delete/modify.
+2. AWS managed - Job function	- Provided policies based on standard job roles we have in market. We cant delete/modify.
+3. Customer Managed				- based on customer's custom req, We can create policies. We can delete/modify.
+4. Inline policy				- Embedded directly into a single user/group/role. If we delete the user, this delete automatically. Not reusable. When existing user's policy limit reached. One entity, req special permissions. 
+
+
+Version : yes : "2012-10-17" (Policy langiage version)
+Statement : yes : Array of permissions blocks
+sid : No : statement id.
+
+Effect : Yes : It supports "Allow" and "Deny" only
+Action : Yes: Which AWS API calls you want to "Allow/Deny" (listbuckets, launchinstance)
+Resource : Yes : Which AWS Resource (*)
+
+Condition : NO : We can add extra condifiotions (ip match, region)
+
+
+Req: Create a policy to perform allow all "ReadONly" operations on S3 Service.
+
+Req: I need an IAM user, who has full access on all resources.. But not on "S3 Service" (Deny Everything)
+
+
+IAM Policy Eval logic.
+
+1. Explicit DENY			--> Always DENY
+2. Explicit ALLOW			--> Allow the requests
+3. Nothing Matched			--> Implicit DENY
+4. Allow from SCP			--> SCP must allow.
+
+** We can apply restrictions on "root user" using SCP (Service Control Polocies) at account level, when using AWS Organisations.
+
+---
+
+Inline Policy: alligned to one particular entity (user/group/role)
+--> hard to track
+--> In specific. scenarios only we use, When existing policy count reached or required permisisons for specific user. 
+
+---
+
+** We always allow users to access only allowed regions.
+
+Req: Allow IAM user to create/work only in mumbai region. (s3 only)
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "s3:*",
+            "Resource": "*",
+            "Condition": {
+                "ForAllValues:StringEquals": {
+                    "aws:RequestedRegion": [
+                        "ap-south-1",
+                        "ap-south-2"
+                    ]
+                }
+            }
+        }
+    ]
+}
+
+
+------
+
+Limit user to work from specific/corporate network only
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "*",
+            "Resource": "*",
+            "Condition": {
+                "IpAddress": {
+                    "aws:SourceIp": "27.59.176.106"
+                }
+            }
+        }
+    ]
+}
+
+----
+
+Permissions boundary: We can setup max permisisons that a user can have using permissions boundary. You add more permissions than the boundary, it wont work.
+
+----
+
+credentails Report: For Audit and Security insights.. 
+
+ARN : Amazon resource name:
+
+----
 
 
 
