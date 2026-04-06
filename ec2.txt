@@ -1,0 +1,58 @@
+
+
+EC2 : Elastic Compute Cloud : 
+
+We can launch instances without worrything about infrastructure.
+Instance = Server = Azure VM = Google Engine = Virtual Machiene = box
+
+1. OnDemand Instances : 
+--> Pay-as-you-go - NO Commitment.
+--> Dev/Test, Unpredictable workloads, New application testings.
+--> Most expensive per hour.
+--> AWS bills per second with a 60 sec minimum billing.
+
+2. Reserved Instances (RI)
+--> commit for 1/3 yrs, you get big doscount
+--> best for "steady", Predictable workloads.. always on kind of apps..
+
+--> Standard RI : Locked to a specific instance type/region. Good Discount
+--> Convertable RI : Can change instance family/size. Slightly loweer discount, more flexible.
+
+Pricing Options for RI: 
+	Full Upfront : pay 100% amount and get your instance.
+	Partial upfront : pay 30-60% amount now, AWS reduce the hourly price.
+	No Upfront : Pay everything based on usage.
+
+
+3. Savings Plan : Savings Plans are a flexible pricing model that offer low prices on AWS usage, in exchange for a commitment to a consistent amount of usage (measured in $/hour) for a one- or three-year term. 
+
+Compute Savings Plans : Applies to EC2 instance usage, AWS Fargate and AWS Lambda service usage, regardless of region, instance family, size, tenancy and operating system.
+
+EC2 instance Savings Plans : Applies to instance usage within the committed EC2 family and region, regardless of size, tenancy and operating system.
+
+Database Savings Plans : Applies to Aurora, RDS, DynamoDB, ElastiCache, Amazon DocumentDB, Neptune, Amazon OpenSearch Service, and other services regardless of supported engine, instance family, size, deployment option, or Region.
+
+SageMaker Savings Plans: Applies to SageMaker service usage, regardless of Region, instance family and component.
+
+
+4. Spot Instances : 
+--> Bid for spare capacity, We can get huge discount
+--> BUT These instances can be interrupted with just 2 min warning.
+--> If our application interrupted, no affect, we can go with spot instances.
+
+--> If price changed, AWS terminated the instance, we no need to pay for partial hours.
+--> If price not changed, YOU terminated the instance, we no need to pay for Full duration.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

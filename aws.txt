@@ -266,6 +266,13 @@ ARN : Amazon resource name:
 
 ----
 
+D: 06/04/2026
+
+Access Analyzer: 
+
+External access findings : Identify resources shared with an external entity
+Internal access findings : Identify internal IAM users and roles that can access specific resources
+Unused access findings : Identify IAM users and roles with unused access
 
 
 
