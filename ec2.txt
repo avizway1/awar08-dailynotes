@@ -5,14 +5,14 @@ EC2 : Elastic Compute Cloud :
 We can launch instances without worrything about infrastructure.
 Instance = Server = Azure VM = Google Engine = Virtual Machiene = box
 
-1. OnDemand Instances : 
+1. On-Demand Instances : 
 --> Pay-as-you-go - NO Commitment.
 --> Dev/Test, Unpredictable workloads, New application testings.
 --> Most expensive per hour.
 --> AWS bills per second with a 60 sec minimum billing.
 
 2. Reserved Instances (RI)
---> commit for 1/3 yrs, you get big doscount
+--> commit for 1/3 yrs, you get big discount
 --> best for "steady", Predictable workloads.. always on kind of apps..
 
 --> Standard RI : Locked to a specific instance type/region. Good Discount
@@ -42,6 +42,113 @@ SageMaker Savings Plans: Applies to SageMaker service usage, regardless of Regio
 
 --> If price changed, AWS terminated the instance, we no need to pay for partial hours.
 --> If price not changed, YOU terminated the instance, we no need to pay for Full duration.
+
+
+=====
+
+
+D: 07/04/2026
+
+
+t3.micro
+
+t --> family
+3 --> Generation (Higher = Works better)
+micro --> Size (micro, medium , large, xlarge, 12xlarge) (CPU & Memory)
+
+i --> intel processor
+a --> amd processor
+g --> graviton processor
+
+
+Instances Family :
+
+General purpose : Balanced CPU + Memory + Network : T / M 
+Compute Optimised : More CPU powered instances : C
+Memory Optimised : Lots of RAM - Data lives in Memory : R, U, X, Z
+Storage optimized : High IOPS / High throughput local storage : I, D, H
+Accelerated Computing : GPU supported hardware : P, G, Trn
+High-performance computing : High performance computing : hpc
+
+
+Dev / QA : We use Slightly lower configurations
+t3.medium
+t4g.medium
+t4g.large
+
+UAT / Prod : We always matches Prod config in UAT env.
+m5.large
+m5.xlarge
+m6i.large
+r5.xlarge (rds - mysql)
+r5.2xlarge (rds - postgresql)
+
+=========
+
+Step 1 : Add Tags  (Name, Project, ClientID, POC, Cost center)
+
+Step 2 : Choose AMI (Amazon Machiene Image) : Microsoft Windows Server 2025 Base
+
+Step 3 : Choose the Instance Type : c7i-flex.large / t3.small 
+
+Step 5 : 
+
+Keypair : Combination of Public and private key
+Public Key = Lock					--> Stores inside ec2 Instance (AWS)
+Private key = key to open lock		--> Downloads in our laptop (YOU)
+
+windows - For password retrival, we use the private key
+Linux - We can directly use the private key to connect
+
+One keypair, can be used with multiple instances.
+
+Step 6 : Network Configuration
+
+--> use default vpc for now
+
+Security group : Firewall for our instance.. 
+Ports : 0 - 65535
+
+Windows : RDP : Remote Desktop protocol : 3389
+Linux : SSH : Secure Shell : 22
+web : HTTP : 80
+secure web : HTTPS : 443
+mysql : 3306
+mssql : 1433
+postgre : 5432
+
+From where you want to connect: 
+1. Anywhere (0.0.0.0/0 :::/0) 
+2. Custom (We can provide required network IPs)
+3. MyIP
+
+
+Step 7 : Choose the Storage 
+
+EBS : Elastic Block Storage : 
+Windows : 30 GB
+Linux : 8 GB
+
+Step 8 : Review and Launch
+
+
+Windows OS : you can use "remote desktop tool"
+
+Method 1 : Search --> "remote desktop" --> open application and provide the Instance Public IP, then provide the "Username" and "Password".. Click "Yes"..
+Method 2 : Open run (Win+r) --> type "mstsc" --> Click enter.
+
+MAC OS : Navigate to "app store" and Download "Windows App" then open.. provide the Instance Public IP, then provide the "Username" and "Password".. Click "Yes"..
+
+
+Usermanagement : open run --> type "lusrmgr"
+
+
+
+
+
+
+
+
 
 
 
