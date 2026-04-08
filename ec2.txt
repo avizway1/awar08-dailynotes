@@ -144,6 +144,88 @@ Usermanagement : open run --> type "lusrmgr"
 
 
 
+===========
+
+Linux Instance launch:
+
+1. Add tags
+2. Choose "Amazon Linux AMI" (default username: ec2-user (redhat: redhat / ec2-user) (ubuntu: ubuntu / ec2-user))
+3. Choose Instance type : t3.micro
+4. Choose Keypair : existing / New keypair (.pem format)
+5. Choose SG (Open SSH : 22)
+6. Storage (8 gb )
+7. Review and launch instance
+
+
+Connectivity: 
+
+Option 1 : Browser based connect : Choose instance, Click on "connect" then choose Connectt using public ip.
+* Make sure your SG opens SSH anywhere.
+* Check your browser pop-up
+* WE DONT USE THIS OPTION IN REAL ENVIRONMENTS.
+
+---------
+
+Option 2 : 
+Windows: Command Prompt / Powershell : (open cmd and type "ssh")
+MacOS / Linux : Terminal
+
+** MOSTLY WE USE THIS OPTION AT ENTERPRISE LEVEL.
+
+If your cmd prompt says, ssh is not a recognised command.. then perform below steps:
+Open Settings: Go to Settings > System > Optional features.
+View Features: Click on View features next to "Add an optional feature".
+Install OpenSSH: Search for "OpenSSH CLient," select the checkbox, click Next, and then Install.
+CLose and open your command prompt.
+
+Navigate to the location, where we have the keypair, Then open the Terminal / command prompt.. 
+
+ssh -i yourkeypair.pem <username>@<public-ip>
+
+ssh -i "awar08-kp.pem" ec2-user@3.110.169.105
+
+Linux/mac : Permissions too open : chmod 400 keypair.pem
+windows : 
+icacls "C:\path\to\your\key" /inheritance:r
+icacls "C:\path\to\your\key" /grant:r "$($env:USERNAME):(F)"
+icacls "C:\path\to\your\key"
+
+------
+
+Option 3 : Works in Windows and MacOS
+
+Install github in your laptop. THen use git bash to connect to your instance.
+
+https://git-scm.com/install/windows
+https://git-scm.com/install/mac
+
+Navigate to the keypair location, then right click, more option, Open "git bash here"
+
+ssh -i "awar08-kp.pem" ec2-user@3.110.169.105
+
+----
+
+Option 4 : Works only in Windows
+
+Download Putty : https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
+
+Provide Public IP, Keep port 22
+
+Connections --> SSH --> Auth --> Credentials --> browse the ppk file and connect
+
+*Putty dont support .pem format, COnvert your .pem key to .ppk using "puttygen" tool.
+
+---
+
+Option 5 : MobaXterm 
+* Less used at enterprise level.
+
+
+
+
+
+
+
 
 
 
