@@ -1,0 +1,109 @@
+
+
+Linux : linus torvalds developed linux kernel..
+
+Kernel : component enable communication between OS and Hardware.
+
+Open Source : Free to use, Modify and distribute..
+Security : Robust against malware, virus (strong permissions)..
+Community Support : 
+Cost-Effective : No licensing cost.. 
+Performance : high-end, low-config system...  Works from embedded devices to super computers..
+
+Opensource : Transparancy / collaborations / customise / free distribution
+
+Linux has wide range of Distributions (Disto): 
+
+General use: Ubuntu / Fedora / Linux Mint / Manjaro
+Enterprise Servers : RHEL (RedHat Enterprise Linux) / SUSE Linux Enterprise Server (SLES) / Oracle Linux / Amazon Linux 2023
+Penetration testing : Kali Linux / Parrot OS
+Lightweight OS : Puppy Linux, lubuntu
+Containers : alpine, bookwarm
+IoT / Embedded : Raspbian, Yocto
+
+---
+
+
+cd : Change directory
+ls : displays the content we have in the directory (files/folders)
+pwd : Print working working (tells you where you are now)
+
+cd /
+
+
+
+In linux everything starts from "/"
+
+/ : Root Directory : Top level directory, the parent of all ither directories in Linux OS.
+
+/root : The home directory for root user. (superuser)
+windows: similar to C:\Users\Administrator
+
+/home : Home directory of regular/non-root users. 
+Windows: c:\users\<username>
+
+/bin : Binary Executables : Contains all essential binary files used by all users (ex: ls, cp, mv).. 
+
+/boot : Boot loader files : Contains the linux kernel, boot configs and its related files.
+
+/dev : Device Files : Contains files that represent hardaware devices like hard disks. 
+windows: device manager
+
+/etc : Configuration files : Stores system wide configuration files (i.e; /etc/passwd, /etc/resolv.conf)
+*Service management and system settings
+
+/usr : user Programs : Contains uuser level programs and libs. 
+
+/sbin : System binaries : contains system admin commands i.e; ifconfig, iptables
+*Only root or superusers can execute these commands.
+
+/var : Variable files : Contains data that changes frequently. (logs, databases, documentroot Path)
+
+/lib & lib64 : Essential shared Library files.. 
+* similaar to windows .dll files
+
+/proc (Process information) : COntains system runtime information (CPU / RAM / processes)
+
+/opt : Optional Software 
+/mnt : Mount points : 
+/media : removable media : 
+
+========
+
+pwd 		: print working directory : tells you where you are.
+ls 			: List files & directories in the current location.
+
+ls -a 		: List includes hidden directories also. 
+ls <path> 	: List files & dir from specific path
+
+touch 		: create an empty file. 
+
+mkdir 		: Command to create a directory (windows: folder)
+
+cd 			: Change Directory, Helps to navigate from one path to another path 
+cd ..		: Moves up one directory level.
+cd <path>	: We can move to any absolute path
+
+whoami		: Display as what user we are working.
+
+hostname	: displays hostname
+
+cat /etc/os-release	: Shows detailed os info
+
+uptime		: shows system uptime info
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
