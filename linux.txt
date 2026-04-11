@@ -92,12 +92,127 @@ cat /etc/os-release	: Shows detailed os info
 
 uptime		: shows system uptime info
 
+============
 
 
+ll 			: long list
 
 
+cp : Copy and Paste
+
+cp <file> <target>				--> Copy individual files to target directory.
+
+cp -R <dir> <target> 			--> copy an entire directory recursively.
+
+---
+
+mv : Cut and Paste 
+
+mv <file> <target>
+mv <dir> <target>
+
+--
+
+mv : rename
+
+mv <oldname> <newname>
+
+---
+
+rm : remove/Delete
+
+rm <file-name>
+
+rm s*						: delete all the files, that name starts with "s"
+
+rmdir <folder>				: Works only if directory is empty.
+
+rm -r <folder>				: Recursively delete folder
+
+rm -rf <folder>				: be cautious : Force Delete
+
+rm songs/*					: Delete all files inside a folder. 
+
+---
+
+cat 						: Helps to view content of a document/file.
+
+more						: Displays file content page by page, Useful for long files.
+(enter - Next line & space bar - next page)
+
+head 						: Displays the first 10 lines of a file
+
+head -n 2 passwd			: Displays top 2 lines
+
+tail						: Displays the last 10 lines of a file
+
+tail -n 2 passwd			: displays last 2 lines
+
+sort passwd					: Sort the file content based on alphabetical order.
+
+sort -r passwd				: Reverse sorting
+
+----
+
+grep : Global regular expression print : helpful command to search text within files.
+
+grep "word" filename		: word is case sensitive here
+
+grep -i "Word" filename		: word is case insensitive
+
+grep "word" file1.txt file2.txt
+
+grep -r "word" /path		: Search for the word inside a directory's all files
 
 
+ps aux 		--> Run and observe output
+
+sleep 60 &	--> run sleep command for 60m seconds in backend
+
+ps aux | grep "sleep"
+
+---
+
+vim : VI Improved editor : 
+
+Command Mode : Used for navigating, deletion, other file operations.
+
+Insert Mode : Used for entering text into the file.
+
+TO switch:
+
+command mode ---> Insert Mode : Press "i"
+Insert Mode ---> COmmand Mode : Press "esc"
+
+To Saving/exiting:
+
+:wq		: Save changes and quit editor
+:q!		: Quit editor without saving changes.
+
+o 		: Open a new line below the current line and enters the insert mode
+
+k		: Move cursor up one line
+j 		: move cursor down one line
+
+x		: Delete the charactor
+
+dw		: Delete from the cursor to the end of current word. (left side word)
+db		: Delete the word before the cursor. (right side word)
+dd		: Delete the entire current line.
+
+10dd	: delete the next 10 lines from the cursor
+100dd	: delete the next 100 lines from the cursor
+
+nG		: Move cursor to a specific line. (n = number)
+10G		: Move the cursor to 10th line of the file
+
+:set number		: sets line number
+:set nonumber	: removes the line number
+
+:undolist		: change hisrory
+
+3u		: It undo last 3 changes
+u
 
 
 
