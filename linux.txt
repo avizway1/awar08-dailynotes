@@ -214,6 +214,129 @@ nG		: Move cursor to a specific line. (n = number)
 3u		: It undo last 3 changes
 u
 
+--------------
+
+1. RPM (RedHat Package manager) : Does not resolve dependencies automatically. 
+
+rpm -ivh package.rpm
+
+2. YUM (yellodog Upater Modified) : wrapper around rpm that cna automatically resolve dependencies and retrive packages from repositories (repo).
+
+yum install httpd
+yum install nginx
+
+yum install httpd -y			: non-interactive
+
+yum update
+
+yum search httpd
+
+yum remove httpd
+
+
+---
+
+option 1 : Switch to root user and perform the installation.
+
+sudo su		: It wont fully load root user's environment variables. (.bash_profile, .bashrc)
+sudo su -	: swith to root with login shell and it loads root;'s environment variables. Simulates a fresh root login. (Best practice for admin tasks)
+sudo -i		: similar to "su -", Loads root environment and moves to /root
+
+
+option 2 : Provide sudo permissions to the user, so he can use "sudo".
+
+sudo yum install httpd
+
+----
+
+DNF (Dandified YUM) : All newer linux distros are switching/using this. Faster dependencies resolution.
+
+dnf install httpd
+dnf install nginx
+
+dnf install httpd -y			: non-interactive
+
+dnf update
+
+dnf search httpd
+dnf info httpd
+
+dnf list installed
+
+dnf remove httpd
+
+Repo config: /etc/yum.repos.d (or) /etc/dnf/dnf.conf
+
+--
+
+Verify the service status and start the service, and make it as logon service.
+
+
+sudo systemctl status httpd
+sudo systemctl start httpd
+sudo systemctl restart httpd
+sudo systemctl stop httpd
+
+sudo init 6			--> restart
+sudo init 0			--> shutdown
+
+sudo systemctl enable httpd				: Make httpd as logon service
+
+sudo systemctl start httpd --now			: Start the service and make it as logon service.
+
+----
+sudo service httpd status
+sudo service httpd start
+sudo chkconfig httpd on
+----
+
+httpd config path: /etc/httpd/conf/httpd.conf
+
+Apache DocumentRoot path: /var/www/html
+
+Navigate and create some files.
+
+Can we change default port of httpd: yes
+Edit the config file, adjust the "LISTEN".. Restart the service.. 
+
+===============
+
+Process management: 
+
+top			: Show realtime view of running processes (q to come out)
+htop		: same as top but with better ui (sudo dnf install htop)
+
+ps			: shows detailed list of processes
+ps aux		: a (all users) u (user/owner) x (not atatched to terminal)
+
+ps aux | grep sleep
+
+TO kill a process we have "kill" command
+
+kill <pid>	: graceful / gentle request to kill the process (SIGTERM - signal 15)
+
+kill -9 <pid> : forcefully killing the process (SIGKILL - Signal 9)
+
+pstree			: Shows the process tree in hierarchical structure.
+
+
+free			: Shows/displays the memory usage
+
+free -h			: human readable values
+
+free -m
+free -g
+
+watch -n 5 free -h
+
+-> To identify and kill processes using name.
+
+pidof httpd				: To identify the process id.
+pgrep sleep				: To identify the process id.
+pkill sleep				: To kill a process using name
+
+
+
 
 
 
