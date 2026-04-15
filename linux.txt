@@ -239,7 +239,7 @@ yum remove httpd
 option 1 : Switch to root user and perform the installation.
 
 sudo su		: It wont fully load root user's environment variables. (.bash_profile, .bashrc)
-sudo su -	: swith to root with login shell and it loads root;'s environment variables. Simulates a fresh root login. (Best practice for admin tasks)
+sudo su -	: swith to root with login shell and it loads root's environment variables. Simulates a fresh root login. (Best practice for admin tasks)
 sudo -i		: similar to "su -", Loads root environment and moves to /root
 
 
@@ -280,7 +280,7 @@ sudo systemctl stop httpd
 sudo init 6			--> restart
 sudo init 0			--> shutdown
 
-sudo systemctl enable httpd				: Make httpd as logon service
+sudo systemctl enable httpd					: Make httpd as logon service
 
 sudo systemctl start httpd --now			: Start the service and make it as logon service.
 
@@ -336,8 +336,153 @@ pgrep sleep				: To identify the process id.
 pkill sleep				: To kill a process using name
 
 
+==============
+
+USER Management in Linux : 
+
+/etc/passwd 		--> User details
+/etc/shadow			--> Encrypted passwords
+/etc/groups			--> Groups details
+/etc/sudoers		--> Sudo permissions applied using this file (Cant edit file directly) (To edit sudoers file, we need to use "visudo" command.)
+
+who	/ w								--> We can see who logged into the system currently
+
+sudo useradd avinash
+
+sudo useradd -m avinash				--> Explicitly passing argument to create home directory
+
+sudo passwd avinash					--> Command to set password for a user
 
 
+sudo useradd -c "Test user for lInux learning" test
+
+root user id is always : 0
+ec2-user id : 1000
+
+
+sudo userdel avinash				--> Delete a user, but keeps the home directory
+
+sudo userdel -r test				--> Delete user and their home directory
+
+sudo usermod -L avinash				--> Lock user / Disable User
+
+sudo usermod -U avinash				--> UNLock user / Enable User
+
+
+sudo groupadd developers			--> Create a group as developers
+sudo usermod -aG developers avinash	--> Added avinash to developers group
+
+sudo groupdel developers			--> TO delete a group
+sudo passwd -d avinash developers	--> Removes avinash user from a group
+
+getent group developers				--> View group members
+
+--
+
+sudo usermod -aG <group> <user>		--> Add user to a group (without removing from any exitsing groups)
+
+sudo usermod -aG wheel avinash		--> Adding avinash user to wheel group, so avinash can get sudo permissions.
+
+sudo usermod -d /home/newhome avinash	-> We can change user's default home directory also.
+
+cd ~								--> Navigate to users home directory
+
+
+Option 1 : generate / copy any existing users keypair public key to new users home directory (.ssh/authorized_keys), adjust the permissions. (WE DONT USE THIS OPTION)
+
+Option 2 : Set a password for user, adjust the sshd configuration to use password.
+* Preferred option
+
+SSH Configuration file path : /etc/ssh/sshd_config
+
+Edit the sshd config file, set "PasswordAuthentication" to "yes" and make sure to restart the sshd servcie.
+
+sudo systemctl restart sshd	
+
+ssh <username>@<public-ip>
+
+==============
+
+ll
+ls -l test.txt
+
+d	rwx	r-x	r-x 2 ec2-user ec2-user 6 Apr 15 02:31 newtest
+-	rw-	r--	r-- 1 ec2-user ec2-user 0 Apr 15 02:32 test.txt
+
+d : Directory
+- : file
+
+Owner : first 3
+Group : second 3
+Other : third 3
+
+
+owner : u
+group : g
+others : o
+
+read 	: r : View file content and list directories
+write 	: w : Edit file content and create/delete files inside directory
+execute : x	: Run as program and Enter the directory
+
+
+Octal/Numeric permissions : 
+
+Read 	: r : 4
+write	: w : 2
+execute	: x : 1
+None	: - : 0
+
+
+7 : rwx : 4+2+1 	: Full access
+6 : rw- : 4+2+0 	: Read and Write
+5 : r-x	: 4+0+1		: Read and Execute
+4 : r-- : 4+0+0		: Read Only
+0 : --- : 0+0+0		: No Access
+
+chmod 400 mykp.pem
+
+chmod 644 			--> u=r&w g=r o=r
+chmod 777			--> u=rwx g=rwx o=rwx
+
+sudo chgrp developers teamproject/
+
+---
+
+Scenario 1 : Only owner can perform anything
+
+mkdir ~/private
+chmod 700 ~/private
+
+Scenario 2 : Team collaboration Directory
+
+sudo mkdir /opt/teamproject
+sudo groupadd devteam
+sudo usermod -aG devteam <user-1>
+sudo usermod -aG devteam <user-2>
+sudo chgrp devteam teamproject/
+sudo chmod 775 teamproject/
+
+Owner and devteam can perform anything
+other can read only
+
+
+Scenario 3 : Sticky bit (Everyone will have all permisisons, but only user can delete the file)
+
+sudo mkdir /tmp/shared
+sudo chmod 1777 /tmp/shared
+
+#Everyone can create files, but only the owner can delete the file.
+
+
+--
+
+stat <file-name>
+
+getfacl <file-name>
+
+id / id <username> : user and group membership information
+groups <username>
 
 
 
