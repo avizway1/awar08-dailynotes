@@ -485,6 +485,160 @@ id / id <username> : user and group membership information
 groups <username>
 
 
+=================
+
+man "<command>"
+
+man ls					--> Open full manual about the linux command
+
+which ls				--> Find where command lives/presented
+
+type ls					--> tells the command is buildin/aliased or external
+
+echo "Hello from AVinash" > echotest.txt		--> Overwrite existing info and wreite the only new info/text
+
+echo "Hello from AVinash" >> echotest.txt
+echo "Hello from Anudeep" >> echotest.txt		--> Add the info to existing info
+
+echo -e "Line1\nLine2\nLine3\tTabbeddata"
+
+
+export NAME=avinash
+export AGE=37
+
+#!/bin/bash
+echo "Hello from $NAME"
+echo "My age is $AGE"
+echo "Today is $(date)"
+
+
+Userlevel Permantly add a variable (commonly used option)
+
+vim ~/.bashrc
+
+export NAME=avinash
+export AGE=37
+
+source ~/.bashrc
+
+----
+
+HEREDOC (EOF) : here document : 
+
+cat <<EOF > fruits.txt
+apple
+banana
+mango
+grapes
+EOF
+
+----
+
+"tee" command in linux
+
+ls -l | tee output.txt			--> Shows the output in terminam and saves the output to the file.
+
+ls -l | tee -a output.txt		--> Same as above, but append the info
+
+echo "hello" | sudo tee /etc/test.conf		--> Sudo works with tee command
+
+ls | tee file1.txt file2.txt		--> Sends output to multiple files
+
+
+=========
+
+Networking commands: 
+
+ip addr				--> shows all network interfaces and IPs
+
+ip -br addr			--> Short version of above comamnd
+
+hostname -I			--> Shows instance private IP
+
+ping google.com
+ping <server-ip>	--> Ping a server (Reachability check / latency check)
+
+ping -c 5 google.com
+
+
+
+To download any file over internet, we can use wget comamnd
+wget https://www.google.com
+curl -O https://google.com/
+
+curl http://169.254.169.254/latest/meta-data/
+
+TO GET INSTANCE PUBLIC IP ADDRESS:
+
+curl ifconfig.me
+curl checkip.amazonaws.com
+
+
+--> To Modify your instance hostname, we can use "hostnamectl"
+
+sudo hostnamectl set-hostname my-web-server
+
+--> DNS Configuration files:
+cat /etc/resolv.conf				--> 
+cat /etc/hosts						--> localhostname mappings
+
+
+-----
+
+CHECK PORT STATUS
+
+ss				
+ss -tulnp				--> Shows currently listening ports with program names
+sudo ss -tulnp
+
+sudo ss -tulnp | grep 80
+
+ss -s						--> Summerise all socker stats
+ss -t state established		--> Shows all established connections
+
+sudo lsof -i :80
+sudo lsof -i :22
+
+----
+
+Windows: Enable "telnet client" in your laptop.
+
+sudo dnf install telnet -y
+
+telnet <server-ip/server-dns-name> <port>
+
+---
+
+alternative to "telnet"
+
+openssl s_client -connect host:port
+openssl s_client -connect google.com:443
+
+---
+
+Native linux: (Not applicable to cloud linux)
+** In AWS, We control this using Security groups..
+
+sudo systemctl status firewalld
+
+sudo firewall-cmd --list-all					--> List all firewall rules
+
+sudo firewall-cmd --add-port=8080/tcp --permanent
+sudo firewall-cmd --reload						--> We are opening 8080 and applying
+
+sudo firewall-cmd --remove-port=8080/tcp --permanent
+sudo firewall-cmd --reload						--> We are removing 8080 and applying
+
+---
+
+
+
+
+
+
+
+
+
 
 
 
