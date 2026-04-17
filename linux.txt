@@ -629,7 +629,190 @@ sudo firewall-cmd --reload						--> We are opening 8080 and applying
 sudo firewall-cmd --remove-port=8080/tcp --permanent
 sudo firewall-cmd --reload						--> We are removing 8080 and applying
 
+============
+
+sudo dnf install zip unzip -y
+
+zip myfiles.zip test1.txt test2.txt				--> Picks 2 files and add to myfiles.zip
+
+zip allfiles.zip *								--> picks all files from current location and adds to zip
+
+sudo zip -r entirehome.zip ec2-user/			--> Zip the entire directory
+
+sudo zip -e secure.zip test1.txt				--> THis will enable password protection
+
+unzip:
+
+unzip myfiles.zip								--> unzip in current locaiton
+
+unzip myallfiles.zip -d /home/ec2-user/extracted/	--> Extract/unzip to a specific directory
+
+unzip -l myfiles.zip
+
 ---
+
+Tar (Tape Archieve)
+
+
+tar -czvf mybackup.tar.gz test1.txt test2.txt
+
+c - create
+z - compress
+v - verbose
+f - filename followa
+
+tar -xzvf mybackup.tar.gz				--> untar in current location	
+
+x - extract
+
+mkdir restored
+
+tar -xzvf mybackup.tar.gz -C /home/ec2-user/restored/		--> untar to a specific location
+
+tar -tzvf mybackup.tar.gz					--> view files without untar
+
+==================
+
+find : helps to search for the files and directories based on name, type, date and size.
+
+
+sudo find / -name test1.txt					--> Search everywhere in linux for test.txt file
+
+sudo find / -iname test1.txt				--> Case Insensitive search
+
+sudo find . -name test1.txt					--> Search in current location
+
+sudo find /var/log -name "*.log"			--> Search for log format files in specified dir		
+
+sudo find / -name "error*"
+
+---
+-type f = file
+-type d = directory
+
+sudo find /home -type f -name "*.sh"		--> search foe only files with .sh format
+
+sudo find / -type d -name "logs"			--> Search for dir only in /
+
+sudo find / -type f -empty					--> Identify the empty files
+
+sudo find / -type d -empty					--> Identify the empty directories
+
+---
+
+sudo find / -type f -size +200M				--> Find files larger than 200MB
+
+sudo find / -type f -size 10M				--> look for exactly 10MB sized files
+
+---
+
+sudo find / -type f -mtime -7				--> Files modified in the last 7 days
+
+sudo find / -type f -atime -1				--> finds accessed files in last 1 day
+
+---
+
+find and delete
+
+sudo find /tmp -type f -mtime +7 -delete
+
+
+------
+
+==> Alternaive to find is locate. It maintains database, when we search, it looks the db and provides the result. We need to update the db periodically.
+
+sudo dnf install mlocate -y
+
+sudo updatedb
+
+locate myfile.txt
+locate "httpd.conf"
+locate "*.conf"
+locate -i MYFILE.TXT
+
+====================
+
+sed : Stream Editor : THis comamnd helps us to find and replace the text/delete the text without opening the file.
+
+cat <<EOF > fruits.txt
+apple
+banana
+mango
+banana shake
+grapes
+apple juice apple slices
+EOF
+
+
+sed 's/apple/cherry/' fruits.txt			--> Replaces the first occurance on each line
+sed 's/apple/cherry/g' fruits.txt			--> Replace ALL on each line
+
+sed -i 's/apple/cherry/g' fruits.txt
+
+sed '/mango/a watermelon' fruits.txt		--> adds a new line after mango
+sed '/mango/i watermelon' fruits.txt		--> adds a new line before mango
+
+
+===================
+
+SCP : Secure Copy : Helps to transfer files between 2 linux machienes. 
+
+linux to linux file transfer   : scp
+windows to linux file transfer : winscp, mobaxterm
+
+THis copies the local files to ec2 instance /home/ec2-user/ path
+
+From local to instance with keypair
+scp -i awar08-kp.pem openclaw.pem sydney-kp.pem ec2-user@65.0.102.18:/home/ec2-user/
+
+Instance to local with keypair
+scp -i awar08-kp.pem ec2-user@65.0.102.18:/home/ec2-user/instance.txt ./
+
+Instance to instance
+scp username@ip-add:/path <dest/local path>
+
+==================
+
+Cron Jobs : THis is a job that runs automatically based on time intervals we specified.
+
+sudo dnf install cronie -y
+
+sudo systemctl enable crond
+sudo systemctl start crond
+sudo systemctl status crond
+
+* (minutes 0-59)
+* (Hour 0-23)
+* (Day of Month 1-31)
+* (Month 1-12)
+* (Day of week 0=sun, 1=mon, 2=tues)
+
+
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  *
+
+* * * * *			--> Every minute
+0 * * * *			--> every hour minute zero
+0 0 * * *			--> Every day midnight
+*/5 * * * *			--> Happens after every 5 minutes
+
+
+crontab -l			--> View our cron jobs
+crontab -e			--> We can edit/create cronjob 
+
+/etc/crontab		--> system wide cronjobs configuration
+
+@reboot : run once at startup
+@daily	: 0 0 * * *
+
+---
+
 
 
 
