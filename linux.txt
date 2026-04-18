@@ -811,9 +811,143 @@ crontab -e			--> We can edit/create cronjob
 @reboot : run once at startup
 @daily	: 0 0 * * *
 
+
+==============
+
+Storage devices : HDD & SSD*
+
+
+EBS : Elastic Block Store : 
+
+IOPS : Input and Output operations per Second
+
+Block Size : 4 kb, 8 kb, 16 kb.
+latency : The time taken to process a single I/O operation.
+Throughput : At what rate data transimission happening.. mb/s, gb/s..
+
+IOPS = throughput x 1024 / Blocksize
+
+---
+
+AWS EBS VOlume types: gp2, gp3, io1, io2, sc1, st1 and standard
+
+SSD 		: gp2, gp3, io1, io2
+HDD 		: sc1, st1
+Magnetic 	: standard
+
+root volume : VOlume contains OS : Without this volume, we cannt launch ec2 instance.
+
+root volume : gp2, gp3, io1, io2 & standard
+Addl volume : gp2, gp3, io1, io2, sc1, st1 and standard
+
+---
+
+gp2 and gp3 : General purpose SSD : we use this types for most common workloads.. 
+
+gp2 : Min 1 GB.. Max 16 TB	(We can not configure iops count, we get it 1:3 ratio (1 gb vol = 3 IOPS with min of 100 IOPS)) - 16000 IOPS
+gp3 : Min 1 GB.. Max 64 TB	(Min: 3000 IOPS, Max: 80000 IOPS.)
+
+---
+
+io1 and io2 : If any workload that requires specific IOPS count, we go with this.. 
+
+io1 : Min 4 GB.. Max: 16 TB (1 : 50 Ratio)
+io2 : Min 4 GB... Max: 64 TB.. (Min: 100 IOPS, Max: 200000 IOPS) 
+
+---
+
+HDD : sc1, st1 : bit older.. Less perf compared to SSD.. 
+
+Throuthput Optimised HDD / st1 : suitable bigdata, data warehousing and log processing kind of workload.. 
+Cold HDD / sc1 : Less performance than st1.. less cost also.. 
+
+Min: 125 GB.. Max: 16 TB..
+
+---
+
+Standard (magnetic) : low cost storage solution.. less used.. min 1 gb .. max : 1TB
+
+---
+
+lsblk
+df -Th
+files -s
+mkfs
+mkdir
+mount
+
+
+xfs_growfs
+growpart
+
 ---
 
 
+lsblk 	: List all block devices (disk and Partitions).. SHows mounted and unmounted volumes..
+df -Th 	: Show disk space with filesystem type : Shows only mounted filesystems + Space usage
+
+Windows OS file systems : FAT16, FAT32, NTFS, ReFS
+Linux OS file systems	: ext3, ext4, xfs
+
+with lsblk and df -Th comamnds : We identified "volume path" and "file system type"
+
+Step 1 : Create a volume in same AZ as ec2 instance and attach it.. Then identify the volume name using "lsblk"
+
+new volume path: /dev/nvme1n1
+
+step 2 : verify the file system inside the new volume
+
+file -s /dev/nvme1n1
+
+output: data --> No file system
+
+Step 3 : We need to write the file system in new volume and re verify using "file -s" comamnd
+
+mkfs -t xfs /dev/nvme1n1
+
+Step 4 : Create a directory and mount the volume to the directory
+
+cd /mnt/
+mkdir newvol
+
+sudo mount /dev/nvme1n1 /mnt/newvol
+
+---
+
+Step 5 : Make the mount persistent ( Survives the reboot)
+
+grab the new vol info from temp mount file.. (/etc/mtab)
+
+cat /etc/mtab | grep nvme1n1
+
+Then, write the entire entry into /etc/fstab file (do not modify existing lines)
+
+sudo vim /etc/fstab			--> Write the entry here
+
+---
+
+TO INCREASE an exising volume size:
+
+step 1 : Modify and add more storage at aws console.
+
+lsblk	: shows 10 gb
+df -Th	: shows 5 gb.. My os is not able to use the addl added 5 gb..
+
+sudo xfs_growfs -d /mnt/newvol
+
+---
+
+To increase root volume size, First add more storage at aws console, then run below command.
+
+sudo growpart /dev/nvme0n1 1
+
+---
+
+** In EBS, we can only increase the volume size, There is no option to decrease the size.
+
+** Manually created volumes wont delete automatically, you need to delete it manually.
+
+---
 
 
 
