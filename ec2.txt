@@ -221,18 +221,55 @@ Option 5 : MobaXterm
 * Less used at enterprise level.
 
 
+=====================
 
 
+/dev/nvme1n1
+
+sudo file -s /dev/nvme1n1
+
+sudo mkfs -t xfs /dev/nvme1n1
+
+sudo mkdir ins1addvol
+
+sudo mount /dev/nvme1n1 ins1addvol
+
+**
+If you copy an existing volume and try to attach the volume to the same ec2 instance.. You get a UUID error..
+
+sudo xfs_repair -L /dev/nvme2n1
+
+sudo xfs_admin -U generate /dev/nvme2n1
+
+---
+
+Snapshot : back up copy of an ebs volume.
+
+Snapsots are point in time copies. (if you create a ss at 07:24, you get whatever data we have at 07:24)
+
+AWS uses s3 as backend platform for SS.
+
+Can we see data inside a SS .? Ans: NO.. (Create a volume and attach to instance..)
+AWS uses incremental backup mechanism.. We just need most recent copy for all data.. 
+
+If we have any unencrypted volume, to encrypt it.. Create a SS, then create a volume from the SS.. While creating, enable encryption.
+
+----
+
+RTO : Recovery Time Objective : 
+Simple Meaning: Downtime limit
+The Question : How long can we afford to be offline
+Focus: Recovery speed
+Example: If our RTO is 2 hours, We must have systems should be back - "up and running" with in 2 hours of crash to avaoid business damage.
+
+RPO : Recovery Point Objective : 
+Simple meaning: your data loss limit
+Question: How much data can we afford to lose.
+Focus: Backup frequency
+Example : If your ROP is set to 1 hour, you must have backups configured for every hour.
 
 
-
-
-
-
-
-
-
-
+Data Lifecycle Manager: Automate the creation, retention, copy and deletion of snapshots. 
 
 
 
