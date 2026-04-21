@@ -272,6 +272,118 @@ Example : If your ROP is set to 1 hour, you must have backups configured for eve
 Data Lifecycle Manager: Automate the creation, retention, copy and deletion of snapshots. 
 
 
+======================
+
+Golden AMI / Customised AMI : 
+
+Req : need 10 ec2 instances with custom user, he needs pwd and sudo access.. Instance should have packages i.e; telnet, tree, httpd package, AV, internal sw (monitoring agent).. Addl volume should be mounted.. (* CIS benchmarks)
+
+Option 1 : Launch 10 instances, connect to every instance and install all req s/w and perform customisations 10 times..  (for future req, do it again)
+
+Option 2 : Launch 1 instance, connect to that instance and install all req s/w and perform customisations.. Then create a GoldenAMI.. Launch 10 instance.. (you can use it later)
+
+
+1. user creation, passwd, ssh edited, sudo for f-id	--> working
+2. httpd install, enable, and create the content 	--> working
+3. installed tree, telnet							--> working
+4. added vol, mounted and added entry in /fstab		--> working
+
+---
+
+Basic sanity check / Basic Validation
+
+---
+
+sudo file -s /dev/nvme1n1
+sudo mkfs -t xfs /dev/nvme1n1
+cd /mnt
+sudo mkdir newvol
+sudo mount /dev/nvme1n1 newvol
+
+cat /etc/mtab | grep nvme1n1
+
+/dev/nvme1n1 /mnt/newvol xfs rw,seclabel,relatime,attr2,inode64,logbufs=8,logbsize=32k,sunit=8,swidth=8,noquota 0 0
+
+sudo vim /etc/fstab
+
+/dev/nvme1n1 /mnt/newvol xfs rw,seclabel,relatime,attr2,inode64,logbufs=8,logbsize=32k,sunit=8,swidth=8,noquota 0 0
+
+
+===========
+
+recommended : stop the instance and create goldenAMI. Its not mandatory. 
+
+=============
+
+IMDSv2 : Instance Metadata Service
+
+metadata : We can use this option to get data about the ec2 instance (When wea re connected)
+
+To access this feature, first "Metadata accessible : Enabled"
+
+2 Options : 
+
+v1 : We can access information using metadata url (less secured - possibility for SSRF (server side request forgery) attack)
+v2 : It needs token to access metadata.
+
+v1: 
+curl http://169.254.169.254/latest/meta-data/network/interfaces/macs/02:e8:ec:5a:f8:27/owner-id
+
+
+ami-id
+ami-launch-index
+ami-manifest-path
+block-device-mapping/
+events/
+hostname
+identity-credentials/
+instance-action
+instance-id
+instance-life-cycle
+instance-type
+local-hostname
+local-ipv4
+mac
+managed-ssh-keys/
+metrics/
+network/
+placement/
+profile
+public-hostname
+public-ipv4
+public-keys/
+reservation-id
+security-groups
+services/
+system
+tag-sets/
+
+
+v2 : We need to generate the token and need to use this while accessing metadata.
+
+test using this url: 
+curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"
+
+TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+
+curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/ami-id
+
+=================
+
+
+Userdata: We can pass commands when we are launching instance for the first time.. 
+usedata script run as root user..
+--> verify logs at /var/log/cloud-init-output.log
+--> size should not exceed 16KB
+
+
+#!/bin/bash
+sudo dnf install httpd -y
+sudo systemctl start httpd
+sudo systemctl enable httpd
+echo "<h1>This website is from userdata </h1>" >> /var/www/html/index.html
+
+
 
 
 

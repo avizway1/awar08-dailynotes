@@ -399,6 +399,8 @@ Edit the sshd config file, set "PasswordAuthentication" to "yes" and make sure t
 
 sudo systemctl restart sshd	
 
+sudo systemctl restart sssd
+
 ssh <username>@<public-ip>
 
 ==============
