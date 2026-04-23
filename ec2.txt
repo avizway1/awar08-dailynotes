@@ -449,6 +449,107 @@ memory stress
 stress --vm 2 --vm-bytes 512M --timeout 600
 
 
+==============
+
+EventBridge : EB is a serverless event bus service that connects our AWS services, SaaS apps and custom apps using events. This allows us to build loosely coupled event driven architectures without writing complex polling logics. 
+
+EB has 2 Primary use cases : 
+
+1. Event Driven Process : React to event 
+(ec2 instance stopped --> send notification)
+(Someone opened 0.0.0.0/0 at SG --> Send notification)
+
+2. Scheduled Process : Run task at a specific time / interval
+(Satrat dev instance at 08 AM IST Everyday)
+
+---
+
+Event : A JSON message that describes a change in state
+
+Event Bus : The channel through which events flow (default* / Custom / partner)
+
+Rule : Defines which events to match and where to send them
+
+Target : Destination of a matched event (SNS, Lambda, SQS ...)
+
+Event Pattern : JSON filter that matches event based on fields
+
+Input Transformer : Reshape the event before sending them to target.
+
+Input path : Extract only what we need
+Input Template : Use Input path info in simple language in input template
+
+---
+Usecase : EC2 instance state change alert
+---
+
+{
+   "version":"0",
+   "id":"b172d695-106e-84d3-800e-c2cf1e67cc32",
+   "detail-type":"EC2 Instance State-change Notification",
+   "source":"aws.ec2",
+   "account":"655700896650",
+   "time":"2026-04-23T02:12:44Z",
+   "region":"ap-south-1",
+   "resources":[
+      "arn:aws:ec2:ap-south-1:655700896650:instance/i-0e3144f0091b31b97"
+   ],
+   "detail":{
+      "instance-id":"i-0e3144f0091b31b97",
+      "state":"stopped"
+   }
+}
+
+---
+
+input Path:
+
+{
+	"time": "$.time",
+	"region": "$.region",
+	"instance-id": "$.detail.instance-id",
+	"state": "$.detail.state"
+}
+
+---
+
+Input Template:
+
+"At <time>, status of my ec2 instance <instance-id> changed to <state> in <region> region. Act Fast.!!"
+
+---
+
+User Case 2 : get alert when IAM user created or deleted
+
+Pre-Req: Management trail must be enabled in "us-east-1 / N. Virginia" region.
+
+
+{
+  "source": ["aws.iam"],
+  "detail-type": ["AWS API Call via CloudTrail"],
+  "detail": {
+    "eventSource": ["iam.amazonaws.com"],
+    "eventName": ["CreateUser", "DeleteUser"]
+  }
+}
+
+---
+
+Task : Send email alert whenever anyone open 0.0.0.0/0 at SG level.
+
+
+=======
+
+
+Task : After launching an instance from GoldenAMI, ec2-user is not able to login into instance even after setting the password and changing the allowpasswordlogin to yes in sshd config file. 
+Help to identify the issue.
+
+
+
+
+
+
+
 
 
 
