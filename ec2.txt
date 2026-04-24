@@ -548,22 +548,112 @@ Help to identify the issue.
 
 ===============
 
+IAM Users will have 2 types of accesses.
 
-ClickOps
+1. Management console access : Username, Password and Sign-in URL.. Browser.. 
 
+2. Programatic Access : AccessKeyID and SecretAccessKey.. CLI (cmd/powershell/shell)
 
-
-
-
-
-
+Pre Req: aws.amazon.com/cli .. Download and install aws cli tools
 
 
+=========
+
+Step 1 : configure aws cli  
+--> AWS AccesskeyID and SecretAccess will be stored as plain text
+--> users home directory (folder .aws --> config & credentials).. 
+
+aws configure
+
+Provide AccessKey
+Provide SecretAcesskey
+Provide Region : ap-south-1
+output format : none / json / text / table
+
+sts : security token service
+
+aws sts get-caller-identity
 
 
+=======
+
+Method 2 : AWS LOGIN (new and recommended option)
+
+** Make sure to attach "SignInLocalDevelopmentAccess" policy to the IAM user. 
+
+AWS login option is bit secure as token refresh for every 15 minutes. 
+token stores in "~/.aws/login/cache/" location .json files.
 
 
+--> aws login
 
+--> aws login --remote				(No browser option --> copy url, enter in browser, get the code and copy and provide here)
+
+=========
+
+named Profiles for Multi Account
+
+aws configure --profile dev			(accesskey & secretkey)
+aws configure --profile uat 		(accesskey & secretkey)
+
+aws s3 ls --profile dev				List s3 buckets from dev account
+
+aws s3 ls --profile uat				List s3 buckets from uat account
+
+aws configure list-profiles			--> list all configured profiles
+
+========
+
+TO know where the comamnd got strick / how command is executing:
+
+aws s3 ls --debug
+
+======
+
+modify the output format based on our req.
+
+aws iam list-users --output text
+aws iam list-users --output table
+aws iam list-users --output json
+
+=====
+
+aws s3 sync <local> <dest-path>
+
+
+aws ec2 
+
+ami-id
+instance-type
+keypair
+securitygroup
+count
+
+
+aws ec2 run-instances --image-id ami-0e12ffc2dd465f6e4 --instance-type t3.micro --key-name awar08-kp --count 1 --security-group-ids sg-0f7cdd4cf77882524 --region ap-south-1 --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=my-cli-instance}]' 'ResourceType=volume,Tags=[{Key=Name,Value=my-cli-instance}]'
+
+
+aws ec2 describe-instances
+
+aws ec2 stop-instances --instance-ids i-0dc63c5aa813a24c4
+
+====
+
+To query/search particular info from long resource description, we can use "JMESPath Query" option. 
+
+ex: aws ec2 describe-instances --query 'Reservations[*].Instances[*].InstanceId' --output text
+
+=====
+
+aws help
+
+aws s3 help
+
+aws s3 ls help
+
+=====
+
+https://kiro.dev/downloads/				--> based on your os, downlaod and install
 
 
 
