@@ -655,6 +655,28 @@ aws s3 ls help
 
 https://kiro.dev/downloads/				--> based on your os, downlaod and install
 
+=====
+
+IAM ROles : allow ec2 instances / lambda functions / ecs / event bridge schedules / s3 buckets to call another service securely, without storing the iam credentials (accesskeyid and secret accesskey)
+
+
+----
+
+Systems Manager : 
+
+preq : Create an iam role and atatch it to ec2 instance, make sure that role has attached with "ssm related polocies".
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
