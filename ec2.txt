@@ -666,16 +666,52 @@ Systems Manager :
 
 preq : Create an iam role and atatch it to ec2 instance, make sure that role has attached with "ssm related polocies".
 
+----
+
+D: 27/04/2026
+
+Vertical Scaling : Adding or removing resources (i.e; cpu / memory) to the same instance. 
+--> We have to stop the ec2 instance to perform vertical scaling.
+
+CRQ : Change Request : t3.micro --> t3.small
+
+CAB / Change Advisory Board : We have to present our CRQ to CAB team/meeting.
+Non-Prod : weekly 2 times
+Prod : weekly 1 time
+
+--> When it is planned to implement.? Ans : Saturday morning 05:00 AM - 09:00 AM
+--> Is it client facing resource.? Ans : Yes
+--> Do we have client approvals.? Ans : Yes
+--> Does it involve any budgeting approvals.? Ans : Yes, Minimum cost change
+--> Does this change required downtime.? Ans : Yes, Downtime required, Approx 15 min
+--> Do you have an y rollback plan.? Ans: Yes, undo change
+--> what are all the teams involved in this CRQ.? Ans: aws, production support, db, app/dev..
+--> Have we created tasks for all the teams involved.? Ans: yes
+--> Are you performing any Pre-implementation steps.? Ans : Taking snapshot/backup.. Stop services.. 
+--> Who will perform sanity check / change validations.? Ans: App, Prod support.. 
+--> Is this change already implemented in lower environments.? Ans : Dev --> QA --> UAT --> Prod
+
+---
+
+Horizantal scaling : Adding more number of instances to deliver our workload.. 
 
 
+Load balancer Health Checks
+
+Protocol: http
+Port : 80
+Path : /status.html
+Interval : 30 Sec
+Request timeout : 2 Sec
+Healthy Threshoulds : 5 
+Unhealthy thresholds : 5
 
 
+ALB : Application Load Balancer : Layer 7 LB : Web Apps, Containers, microservices, APIs.. , Also, supports Path Based and Host Based routing.. We cant allocate a dedicated IP Address.
+Supported Protocols : http, https
 
-
-
-
-
-
+NLB : Network Load Balancer : Layer 4 LB : Low latency, high performance apps.. Supports Port/IP based routing..
+Supported Protocols : TCP / UDP / TLS
 
 
 
