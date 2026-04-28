@@ -709,9 +709,51 @@ Unhealthy thresholds : 5
 
 ALB : Application Load Balancer : Layer 7 LB : Web Apps, Containers, microservices, APIs.. , Also, supports Path Based and Host Based routing.. We cant allocate a dedicated IP Address.
 Supported Protocols : http, https
+Algorithms: roundrobin, weighted and lkeast outstanding request.. 
 
 NLB : Network Load Balancer : Layer 4 LB : Low latency, high performance apps.. Supports Port/IP based routing..
 Supported Protocols : TCP / UDP / TLS
+
+
+=======
+
+D: 28/04/2026
+
+
+NLB : 
+--> Supports TCP, UDP, TLS
+--> Have an option to allocate dedicated EIP. 
+--> Works with "flow hash algorithm"
+
+===
+
+ASG : Auto Scaling group : 
+
+Step 1 : Launch an ec2 instance, Make it as webserver.. and reboot and verify output.. Then create a Custom/Golden AMI.
+
+Step 2 : Create a Launch template (Enable "ASG Suggestions") - Instance Type, Security Group, AMI ID..
+--> Choose Custom AMI
+--> CHoose t3.micro
+--> Choose Keypair
+--> Create / Choose existing security group. 
+
+Step 3 : Create an Empty Load Balancer with a Target group (Dont add any instance) (ignored today)
+
+Step 4 : Create an Auto Scaling Group
+
+Desired Capacity : 2
+No Scaling Polocies.. 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
