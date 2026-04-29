@@ -745,14 +745,42 @@ Desired Capacity : 2
 No Scaling Polocies.. 
 
 
+===========
+
+Mini Project : 
+
+Step 1 :
+SG : 
+ELB- AG  : http, https : 0.0.0.0/0
+EC2 - SG : 	http : ELB-SG
+			ssh : MYip/anywhere
+EFS - SG :	NFS : EC2 - SG
+
+Step 2 : Create an IAM role for ec2 instance, attach "s3" and "ssm full access" polocies.
+
+Step 3 : Launch an ec2 instance and make sure it has IAM role attached and Make it as webserver.
+
+Step 4 : create an EFS and mount it to an ec2 instance path: /var/www/html/, make it perm mount and verify by restarting the instance.
+
+Step 5 : Create a Custom AMI / Golden AMI.
+
+Step 6 : Create a Target Group and then, An ALB. Dont add any instances.
+
+Step 7 : Create a Launch template with required settings for ASG Instances (i.e; CustomAMI, Instance Type, IAM Role, KeyPair)
+
+Step 8 : create an ASG with Load Balancer and Launch template
 
 
 
+Simple Scaling : You create an Alarm.. When to scale-in and when to scale-out
+Step Scaling : scale-in and scale-out happens based on the steps we configure
+Target Tracking Scaling : AWS RECOMMEND.. AVG CPU/Memroy.. AWS Handles everything
+
+Scheduled Scaling : cron / onetime.. 
 
 
-
-
-
+scale-out : Launches new instance into asg to match the required size.
+Scale-in : Terminates ec2 instances to reduce group size
 
 
 
