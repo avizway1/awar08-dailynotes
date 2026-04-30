@@ -783,7 +783,15 @@ scale-out : Launches new instance into asg to match the required size.
 Scale-in : Terminates ec2 instances to reduce group size
 
 
+======
 
+
+
+2/2 or 3/3 status checks.?
+
+System Status Check : 
+Instance Status Check : 
+EBS Volume Status check : 
 
 
 
