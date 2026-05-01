@@ -786,12 +786,90 @@ Scale-in : Terminates ec2 instances to reduce group size
 ======
 
 
+D: 30/04/2026
+
+Placement groups : 
+CLuster PG : Low layency and high network throuhput
+Partition PG
+Spread PG
+
+---
+
+Tenancy Options:
+
+Shared Tenancy : Default.. and low cost
+Dedicated Instance : 
+Dedicated Host : Apply licenses at h/w level (i.e; cpu cores..)
+
+---
+
+Virtualisation : 
+AWS uses "XEN" (old gen) and "NITRO" hypervisor (Latest generation)
+
+---
 
 2/2 or 3/3 status checks.?
 
 System Status Check : 
 Instance Status Check : 
 EBS Volume Status check : 
+
+---
+
+Instance Store Volumes : Also, called as Ephemeral storage..
+We cant stop/start instance..
+Due to any reason, if instance stop and started, we loss all data.
+
+
+=========
+
+D: 01/05/2026
+
+Cloudwatch has 2 Types of monitorings :
+1. Basic Monitoring : 5 Minutes Interval
+2. Detailed Monitoring : 1 Minute Interval
+
+
+By default, we can monitor only CPU, Network and status check related metrics.. 
+We cannot monitor "Memory", "storage" using Default CW monitorings.
+
+We need to install "Cloudwatch Agent" in ec2 instance and then, we can get "memory", "storage" and "Application logs"..
+
+
+--> Create an IAM role with "SSM Full Access" also, attach "CloudWatchAgentServerPolicy" to the same role.
+
+---
+
+Load Balancer generates the logs and we call it as "accesslogs"
+VPC generates the logs and we call it as "flowlogs"
+
+---
+
+We can trigger alerts based on specific keywords in cloudwatch log groups. We need to configure below
+
+1. Cloudwatch logs metrics filter
+2. Cloudwatch alarm
+3. SNS Topic
+
+
+cloudwatch logs --> Metric filter --> custom metric --> alarm --> sns --> email
+
+
+---
+
+
+Deletion protection: ec2 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
