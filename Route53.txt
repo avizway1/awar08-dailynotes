@@ -1,0 +1,70 @@
+
+
+
+DNS : Domain Naming System/Service
+
+Route53: DNS Port is 53, AWS Named the services based on same.
+
+Domain Name : 
+
+Domain Registrers : Godaddy, bigrock, namecheap, hostinger.. : Selss domains
+
+ICANN : Internet Corporation for assigned names and numbers : Domain uniqueness
+
+IANA : Internet Assigned Numbers Authority : Maintains Root zone database
+
+
+---
+
+Step 1 : Purchase a Domain name at any domain registrer.
+
+Step 2 : Create a hostedzone in AWS ROute53 (domain name = Hosted Zone)
+
+You get 2 recorss in this HostedZone. (We cannot delete)
+
+NS : Name Server Record : *** : Grab these 4 Nameserver records to configure at DOmain Registrer..
+SOA : Start of Authority : 
+
+ns-1959.awsdns-52.co.uk
+ns-154.awsdns-19.com
+ns-667.awsdns-19.net
+ns-1183.awsdns-19.org
+
+Step 3: Configure your Name spervers at Domain registrer website.
+
+Wait atleast 12-24 hrs to take it effect.
+
+--------
+
+
+A : Address Record for IPv4 : Name to FQDN and Vice Versa
+AAAA : Address Record for IPv6 : Name to FQDN and Vice Versa
+CNAME : Cananical Name : 
+MX Record : Mail server exchange 
+TXT Records : Text record.. Valoidations.. 
+
+
+
+Alias Record : Avaialble only in AWS. Intellugently can pick resources.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

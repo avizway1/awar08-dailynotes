@@ -857,12 +857,51 @@ cloudwatch logs --> Metric filter --> custom metric --> alarm --> sns --> email
 
 ---
 
-
-Deletion protection: ec2 
-
+** CLOUDWATCH AGENT IS NOT JUST FOR AWS RESOURCES. WE can install and monitor/get logs from on-premises servers/VMs.
 
 
+---
 
+    2  sudo systemctl status amazon-ssm-agent
+    3  sudo dnf install amazon-cloudwatch-agent -y
+    4  sudo systemctl status amazon-cloudwatch-agent.service
+    5  sudo systemctl start amazon-cloudwatch-agent.service
+    6  sudo systemctl enable amazon-cloudwatch-agent.service
+    7  sudo systemctl status amazon-cloudwatch-agent.service
+    8  cd /opt/aws/amazon-cloudwatch-agent/bin/
+
+
+CW agent looks for the config at "/opt/aws/amazon-cloudwatch-agent/bin/"
+
+sudo vim config.json
+
+
+-----
+
+Option 1 : Create a parameter and store the configuration inside the parameter, passw the parameter to cloudwatch agent.. 
+
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c ssm:cloudwatch-agent-config -s
+
+
+Option 2 : Create config.json file and inform/pass config path to cloudwatch agent.
+
+
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file://opt/aws/amazon-cloudwatch-agent/bin/config.json -s
+
+
+----
+
+sudo systemctl restart amazon-cloudwatch-agent.service
+
+sudo systemctl status amazon-cloudwatch-agent.service
+
+---
+
+Termination protection: Helps to protect instance from accidental termination 
+Stop protection: Helps to protect instance from accidental stops 
+Shutdown behaviour : Stop
+
+---
 
 
 
